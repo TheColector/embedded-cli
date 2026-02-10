@@ -4,7 +4,7 @@ on:
   push:
   pull_request:
   release:
-    types: [ published ]
+    types: [published]
 
 env:
   BUILD_TYPE: Debug
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
@@ -60,21 +60,21 @@ jobs:
 
       - name: Upload test logs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: testing-shl-${{ matrix.build_single_header }}
           path: ${{github.workspace}}/build/Testing
 
       - name: Upload coverage
         if: ${{ matrix.build_single_header == 'OFF' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: coverage
           path: ${{github.workspace}}/build/coverage_xml.xml
 
       - name: Upload generated header
         if: ${{ matrix.build_single_header == 'ON' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: single-header
           path: ${{github.workspace}}/lib/shl/embedded_cli.h
@@ -86,23 +86,23 @@ jobs:
           files: ${{ github.workspace }}/build/coverage_xml.xml
 
   build-arduino-example:
-      runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-      steps:
-        - uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v6
 
-        - name: Generate single header lib
-          working-directory: ${{github.workspace}}/lib
-          run: python3 build-shl.py
+      - name: Generate single header lib
+        working-directory: ${{github.workspace}}/lib
+        run: python3 build-shl.py
 
-        - name: Copy single header file to sketch dir
-          run: cp ${{github.workspace}}/lib/shl/embedded_cli.h ${{github.workspace}}/examples/arduino-cli/embedded_cli.h
+      - name: Copy single header file to sketch dir
+        run: cp ${{github.workspace}}/lib/shl/embedded_cli.h ${{github.workspace}}/examples/arduino-cli/embedded_cli.h
 
-        - name: Compile arduino sketch
-          uses: arduino/compile-sketches@v1
-          with:
-            sketch-paths: |
-              - examples/arduino-cli
+      - name: Compile arduino sketch
+        uses: arduino/compile-sketches@v1
+        with:
+          sketch-paths: |
+            - examples/arduino-cli
 
   build-win:
     strategy:
@@ -115,7 +115,7 @@ jobs:
     runs-on: windows-2019
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
@@ -136,13 +136,13 @@ jobs:
 
       - name: Upload test logs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: testing-win-${{ matrix.arch }}
           path: ${{github.workspace}}/build/Testing
 
       - name: Upload windows examples
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: windows-example-${{ matrix.arch }}
           path: ${{github.workspace}}/build/examples/win32-example/Release/embedded_cli_win32.exe
@@ -151,7 +151,7 @@ jobs:
     runs-on: macos-12
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
@@ -172,7 +172,7 @@ jobs:
 
       - name: Upload test logs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: testing-mac
           path: ${{github.workspace}}/build/Testing
@@ -180,9 +180,9 @@ jobs:
   add-release-assets:
     runs-on: ubuntu-latest
     if: github.event_name == 'release'
-    needs: [ build ]
+    needs: [build]
     steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v7
         with:
           path: artifacts
 
