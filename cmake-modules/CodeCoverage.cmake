@@ -334,6 +334,7 @@ function(setup_target_for_coverage_gcovr_xml)
 
             # Running gcovr
             COMMAND ${GCOVR_PATH} --xml
+            --gcov-ignore-errors=no_working_dir_found
             -r ${BASEDIR} ${GCOVR_EXCLUDE_ARGS}
             --object-directory=${PROJECT_BINARY_DIR}
             -o ${Coverage_NAME}.xml
@@ -410,6 +411,7 @@ function(setup_target_for_coverage_gcovr_html)
 
             # Running gcovr
             COMMAND ${GCOVR_PATH} --html --html-details
+            --gcov-ignore-errors=no_working_dir_found
             -r ${BASEDIR} ${GCOVR_EXCLUDE_ARGS}
             --object-directory=${PROJECT_BINARY_DIR}
             -o ${Coverage_NAME}/index.html
