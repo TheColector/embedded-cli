@@ -56,7 +56,7 @@ jobs:
       - name: Coverage
         working-directory: ${{github.workspace}}/build
         shell: bash
-        run: cmake --build . --target coverage_xml
+        run: cmake --build . --target coverage_xml -- VERBOSE=1 GCOVR_ADDITIONAL_ARGS="--gcov-ignore-errors=no_working_dir_found"
 
       - name: Upload test logs
         if: ${{ always() }}
