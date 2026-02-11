@@ -132,6 +132,7 @@ jobs:
 
       - name: Test
         working-directory: ${{github.workspace}}/build
+        shell: bash
         run: ctest -C $BUILD_TYPE
 
       - name: Upload test logs
@@ -148,7 +149,7 @@ jobs:
           path: ${{github.workspace}}/build/examples/win32-example/Release/embedded_cli_win32.exe
 
   build-mac:
-    runs-on: macos-12
+    runs-on: macos-14
 
     steps:
       - uses: actions/checkout@v6
