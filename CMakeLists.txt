@@ -45,6 +45,8 @@ if (${BUILD_TESTS})
                 NAME coverage_xml
                 EXECUTABLE ctest
                 DEPENDENCIES embedded_cli_tests
-                EXCLUDE "tests/*")
+                EXCLUDE "tests/*"
+                         "deps/catch2/*"
+                         "build/deps/*")
     endif ()
 endif ()
